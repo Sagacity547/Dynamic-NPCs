@@ -12,4 +12,9 @@ public class DialogueManager : MonoBehaviour
         sentances = new Queue<string>();
     }
 
+    public void StartDialogue(Dialogue dialogue)
+    {
+        Debug.Log("Starting Converstation");
+    }
+
 }
