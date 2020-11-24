@@ -159,6 +159,10 @@ public class Player : MonoBehaviour
         //Interact with NPC
         else if(Input.GetKeyDown("E") && canInteract)
         {
+            if (NPC) 
+            { 
+                
+            }
 
         }
 
@@ -199,11 +203,13 @@ public class Player : MonoBehaviour
     }
 
     private bool canInteract;
+    private GameObject NPC; 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "NPC")
         {
             canInteract = true;
+            NPC = collision.gameObject;
         }
     }
 
@@ -212,6 +218,7 @@ public class Player : MonoBehaviour
         if(collision.tag == "NPC")
         {
             canInteract = false;
+            NPC = null
         }
     }
 }
