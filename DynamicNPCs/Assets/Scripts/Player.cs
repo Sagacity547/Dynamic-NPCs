@@ -36,6 +36,9 @@ public class Player : MonoBehaviour
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
+
+        //own code
+        canInteract = false;
     }
 
     // Update is called once per frame
@@ -153,6 +156,12 @@ public class Player : MonoBehaviour
             m_animator.SetInteger("AnimState", 1);
         }
 
+        //Interact with NPC
+        else if(Input.GetKeyDown("E") && canInteract)
+        {
+
+        }
+
         //Idle
         else
         {
@@ -186,6 +195,23 @@ public class Player : MonoBehaviour
             GameObject dust = Instantiate(m_slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;
             // Turn arrow in correct direction
             dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
+        }
+    }
+
+    private bool canInteract;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "NPC")
+        {
+            canInteract = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.tag == "NPC")
+        {
+            canInteract = false;
         }
     }
 }

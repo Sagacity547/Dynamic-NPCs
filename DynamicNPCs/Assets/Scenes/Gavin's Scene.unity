@@ -17150,7 +17150,7 @@ GameObject:
   - component: {fileID: 61346584712756803}
   m_Layer: 0
   m_Name: HeavyBandit
-  m_TagString: Player
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17171,7 +17171,7 @@ GameObject:
   - component: {fileID: 61252361964052878}
   m_Layer: 0
   m_Name: LightBandit
-  m_TagString: Player
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
