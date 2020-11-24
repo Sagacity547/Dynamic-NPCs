@@ -159,9 +159,11 @@ public class Player : MonoBehaviour
         //Interact with NPC
         else if(Input.GetKeyDown("E") && canInteract)
         {
+            // check that the NPC is not null, in theory should never happen
             if (NPC) 
-            { 
-                
+            {
+                DialogueTrigger temp = (DialogueTrigger)NPC.GetComponent("DialogueTrigger");
+                temp.TriggerDialogue();
             }
 
         }
@@ -218,7 +220,7 @@ public class Player : MonoBehaviour
         if(collision.tag == "NPC")
         {
             canInteract = false;
-            NPC = null
+            NPC = null;
         }
     }
 }
