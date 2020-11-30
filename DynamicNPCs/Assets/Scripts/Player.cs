@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private float m_timeSinceAttack = 0.0f;
     private float m_delayToIdle = 0.0f;
 
+    private DialogueManager dialogueManager;
 
     // Use this for initialization
     void Start()
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
 
         //own code
         canInteract = false;
+        startedTalking = false;
+        dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
     }
 
     // Update is called once per frame
@@ -88,7 +91,7 @@ public class Player : MonoBehaviour
         //Wall Slide
         m_animator.SetBool("WallSlide", (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State()));
 
-        //Death
+        /*
         if (Input.GetKeyDown("e"))
         {
             m_animator.SetBool("noBlood", m_noBlood);
@@ -98,9 +101,10 @@ public class Player : MonoBehaviour
         //Hurt
         else if (Input.GetKeyDown("q"))
             m_animator.SetTrigger("Hurt");
+         */
 
         //Attack
-        else if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f)
+        if (Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f)
         {
             m_currentAttack++;
 
@@ -157,13 +161,20 @@ public class Player : MonoBehaviour
         }
 
         //Interact with NPC
-        else if(Input.GetKeyDown("E") && canInteract)
+        else if(Input.GetKeyDown(KeyCode.E) && canInteract)
         {
             // check that the NPC is not null, in theory should never happen
             if (NPC) 
             {
-                DialogueTrigger temp = (DialogueTrigger)NPC.GetComponent("DialogueTrigger");
-                temp.TriggerDialogue();
+                if (!startedTalking)
+                {
+                    DialogueTrigger npcTrigger = NPC.GetComponent<DialogueTrigger>();
+                    npcTrigger.TriggerDialogue();
+                    startedTalking = true;
+                } else
+                {
+                    dialogueManager.DisplayNextSentance();
+                }
             }
 
         }
@@ -204,8 +215,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    //NPC variables
     private bool canInteract;
-    private GameObject NPC; 
+    private GameObject NPC;
+    private bool startedTalking;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "NPC")
@@ -220,6 +234,7 @@ public class Player : MonoBehaviour
         if(collision.tag == "NPC")
         {
             canInteract = false;
+            startedTalking = false;
             NPC = null;
         }
     }

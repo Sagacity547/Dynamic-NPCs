@@ -17204,6 +17204,7 @@ GameObject:
   - component: {fileID: 50959880991646009}
   - component: {fileID: 61346584712756803}
   - component: {fileID: 1463393519416632}
+  - component: {fileID: 1463393519416633}
   m_Layer: 0
   m_Name: HeavyBandit
   m_TagString: NPC
@@ -17229,6 +17230,21 @@ MonoBehaviour:
     - Fine day out isn't it
     - 
     - 
+--- !u!114 &1463393519416633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463393519416631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e02f13c26fcd89a4e984fd3e44b1023b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Sam
+  personality: 
+  trigger: {fileID: 1463393519416632}
 --- !u!1 &1689867554848184
 GameObject:
   m_ObjectHideFlags: 0
@@ -17244,6 +17260,7 @@ GameObject:
   - component: {fileID: 50512961316969852}
   - component: {fileID: 61252361964052878}
   - component: {fileID: 1689867554848185}
+  - component: {fileID: 1689867554848186}
   m_Layer: 0
   m_Name: LightBandit
   m_TagString: NPC
@@ -17269,6 +17286,21 @@ MonoBehaviour:
     - Hello stranger
     - Odd to see new faces around these parts
     - Be seeing you around I suppose
+--- !u!114 &1689867554848186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689867554848184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e02f13c26fcd89a4e984fd3e44b1023b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Peter
+  personality: 
+  trigger: {fileID: 1689867554848185}
 --- !u!1 &1943393466765294
 GameObject:
   m_ObjectHideFlags: 0
@@ -17400,7 +17432,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: 0.662}
+  m_Offset: {x: 0, y: 0.7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -17411,7 +17443,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.2}
+  m_Size: {x: 2.5, y: 1.2}
   m_EdgeRadius: 0
 --- !u!61 &61346584712756803
 BoxCollider2D:
@@ -17426,7 +17458,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: 0.662}
+  m_Offset: {x: 0, y: 0.66200006}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -17437,7 +17469,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.2}
+  m_Size: {x: 2.5, y: 1.2}
   m_EdgeRadius: 0
 --- !u!61 &61368514547992976
 BoxCollider2D:
@@ -18196,6 +18228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 7053259377881453568}
   dialogueText: {fileID: 7053259377153408233}
+  dialogueEnded: 0
   animator: {fileID: 7053259377575912536}
 --- !u!1 &7053259376931308415
 GameObject:
@@ -18729,7 +18762,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: -1452353549
-  m_SortingOrder: 0
+  m_SortingOrder: 40
   m_TargetDisplay: 0
 --- !u!114 &7053259377596466355
 MonoBehaviour:

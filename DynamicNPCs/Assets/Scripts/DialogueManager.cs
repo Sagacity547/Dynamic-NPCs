@@ -7,6 +7,7 @@ public class DialogueManager : MonoBehaviour
 {
     public Text nameText;
     public Text dialogueText;
+    public bool dialogueEnded;
 
     public Animator animator;
 
@@ -16,10 +17,12 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         sentances = new Queue<string>();
+        dialogueEnded = false;
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
+        dialogueEnded = false;
         animator.SetBool("isOpen", true);
         Debug.Log("Starting Converstation");
         nameText.text = dialogue.name;
@@ -58,6 +61,7 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
+        dialogueEnded = true;
         animator.SetBool("isOpen", false);
         Debug.Log("End of Conversation");
     }
