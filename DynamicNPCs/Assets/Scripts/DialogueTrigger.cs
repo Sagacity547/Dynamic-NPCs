@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public Dialogue dialogue;
+    private Dialogue dialogue;
+
+    public void Start()
+    {
+        dialogue = this.gameObject.GetComponent<NPC>().dialogue;
+    }
 
     public void TriggerDialogue()
     {

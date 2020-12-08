@@ -25,7 +25,9 @@ public class Player : MonoBehaviour
     private float m_timeSinceAttack = 0.0f;
     private float m_delayToIdle = 0.0f;
 
+    //Implemented code
     private DialogueManager dialogueManager;
+    public string name;
 
     // Use this for initialization
     void Start()
