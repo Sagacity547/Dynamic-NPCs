@@ -38,33 +38,35 @@ public class NPC : MonoBehaviour
     }
 
     [TextArea(3, 6)]
-    public string[] questSentances;
-    public string[] talkQuest()
+    public List<string> questSentances;
+    public List<string> talkQuest()
     {
         return questSentances;
     }
 
     //Stranger level relationship 0
+    private bool sentancesSet = false;
     void talkStranger()
     {
-        dialogue.sentances.
-        dialogue.sentances[0] = "Hello there stranger";
-        dialogue.sentances[1] = "What business do you happen to have with me?";
-
-        int temp = 0;
-        for(int i = 2; (i - 2) < talkQuest().Length; i++)
+        if(!sentancesSet)
         {
-            dialogue.sentances[i] = talkQuest()[i];
-            temp = i;
-        }
+            dialogue.sentances.Clear();
+            dialogue.sentances.Add("Hello there stranger");
+            dialogue.sentances.Add("What business do you happen to have with me?");
 
-        dialogue.sentances[temp + 1] = "Well be seeing you around I suppose";
+            foreach (string sentance in talkQuest())
+            {
+                dialogue.sentances.Add(sentance);
+            }
+
+            dialogue.sentances.Add("Well be seeing you around I suppose");
+            sentancesSet = true;
+        }
     }
 
     //Aquantince level Relationsip 1-3
     void talkAquantince()
     {
-        dialogue.sentances[0] = "Hello there" + player.name;
-        dialogue.sentances[1] = "How have you been doing?";
+        
     }
 }

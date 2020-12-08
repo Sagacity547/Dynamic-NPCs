@@ -28,8 +28,10 @@ public class DialogueManager : MonoBehaviour
         nameText.text = dialogue.name;
         sentances.Clear();
 
+        int track = 0;
         foreach (string sentance in dialogue.sentances)
         {
+            print(track++);
             sentances.Enqueue(sentance);
         }
 
