@@ -12,7 +12,9 @@ public class Phonebook : MonoBehaviour
     void Start()
     {
         GameObject[] NPCs = GameObject.FindGameObjectsWithTag("NPC");
+        int curr_id = 1;
         foreach(GameObject NPC in NPCs) {
+            NPC.GetComponent<NPC>().npc_id = curr_id;
             phonebook.Add(NPC.GetComponent<NPC>().npc_id, NPC);
         }
         tester();
