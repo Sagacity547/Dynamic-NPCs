@@ -21243,6 +21243,7 @@ MonoBehaviour:
     name: 
     sentances: []
   currentRelationship: 0
+  npc_id: 2
   questSentances: []
 --- !u!1 &1689867554848184
 GameObject:
@@ -21295,6 +21296,7 @@ MonoBehaviour:
     name: BeenJammin
     sentances: []
   currentRelationship: 12
+  npc_id: 1
   questSentances:
   - I've been having trouble gathering items recently
   - Specifically plants I need to give to a potion maker

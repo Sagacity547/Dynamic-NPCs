@@ -9,6 +9,7 @@ public class NPC : MonoBehaviour
 
     public Dialogue dialogue;
     public int currentRelationship;
+    public int npc_id;
     private GameObject player;
 
 
