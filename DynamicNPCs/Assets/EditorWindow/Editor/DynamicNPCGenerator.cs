@@ -5,9 +5,9 @@ public class DynamicNPCGenerator : EditorWindow
 {
     //Variables that will be displayed for developer to edit
     string npcBaseName = "";
+    int npcRelationship = 50;
     int npcID = 1;
-    SpriteRenderer npcSprite;
-    float npcScale;
+    GameObject npcObject;
 
     //Other Variables
 
@@ -30,14 +30,37 @@ public class DynamicNPCGenerator : EditorWindow
         GUILayout.Label("Generate New NPC", EditorStyles.boldLabel);
 
         npcBaseName = EditorGUILayout.TextField("NPC Name", npcBaseName);
+        npcRelationship = EditorGUILayout.IntField("NPC Relationship (0-100)", npcRelationship);
         npcID = EditorGUILayout.IntField("NPC ID", npcID);
-        npcScale = EditorGUILayout.Slider("NPC Scale", npcScale, 0.5f, 3f);
-        npcSprite = EditorGUILayout.ObjectField("NPC Sprite", npcSprite, typeof(SpriteRenderer), false) as SpriteRenderer;
+        npcObject = EditorGUILayout.ObjectField("NPC Object", npcObject, typeof(GameObject), false) as GameObject;
 
         if (GUILayout.Button("Generate NPC"))
         {
             //generate NPC into scene
+            GenerateNPC();
         }
+    }
+
+    private void GenerateNPC()
+    {
+        if (npcBaseName == string.Empty)
+        {
+            Debug.LogError("Error: Please enter a name for the NPC");
+            return;
+        }
+        if (npcObject.GetComponent<NPC>() == null || npcObject.GetComponent<DialogueTrigger>() == null)
+        {
+            Debug.LogError("Error: Please ensure the GameObject has both the 'NPC' and 'DialogueTrigger' scripts attached to it");
+            return;
+        }
+
+        Vector2 spawnPos = new Vector2(0f, 0f);
+        GameObject newNPC = Instantiate(npcObject, spawnPos, Quaternion.identity);
+        newNPC.GetComponent<NPC>().currentRelationship = (int) npcRelationship;
+        newNPC.GetComponent<NPC>().dialogue.name = npcBaseName;
+        newNPC.name = npcBaseName + npcID;
+
+        npcID++;
     }
 
     // Update is called once per frame
