@@ -11,6 +11,8 @@ public class NPC : MonoBehaviour
     public int npc_id;
     private GameObject player;
 
+    public static List<NPC> connections = new List<NPC>();
+    public static List<string> guilds = new List<string>();
 
     // Start is called before the first frame update
     void Start()
@@ -124,5 +126,55 @@ public class NPC : MonoBehaviour
             dialogue.sentances.Add("Alrighty then, see you around soon friend!");
             sentancesSet = true;
         }
+    }
+
+    // adds NPC to their connections and them to the NPCs connections 
+    // returns true if NPC is not null
+    bool makeConnection(NPC connect)
+    {
+        if (connect)
+        {
+            connections.Add(connect);
+            connect.GetComponent<NPC>().recieveConnection(this);
+            return true;
+        }
+        return false;
+    }
+
+    // recieves make connection call from makeConnection()
+    // returns true if connection was made 
+    bool recieveConnection(NPC connect) {
+        if (connect)
+        {
+            connections.Add(connect);
+            return true;
+        }
+        return false;
+    }
+
+    // returns list of all the guilds the calling variable has
+    List<string> getGuilds() {
+        return guilds;
+    }
+
+    // returns if the NPC is in the guild requested
+    bool isInGuild(string guild) {
+        return guilds.Contains(guild);
+    }
+
+    // adds guild to guild list
+    // returns true if guild was added, false if the guild was already in list
+    bool addGuild(string guild) {
+        if (!guilds.Contains(guild)){
+            guilds.Add(guild);
+            return true;
+        }
+        return false;
+    }
+
+    // returns all the guild memebers of a specfied guild
+    // very greedy, should not be called often
+    List<NPC> getGuildMates(string guild) {
+        return null;
     }
 }
