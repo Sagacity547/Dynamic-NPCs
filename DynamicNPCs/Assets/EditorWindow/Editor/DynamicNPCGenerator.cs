@@ -1,10 +1,12 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class DynamicNPCGenerator : EditorWindow
 {
     //Variables that will be displayed for developer to edit
     string npcBaseName = "";
+    string npcGuild = "";
     int npcRelationship = 50;
     int npcID = 1;
     GameObject npcObject;
@@ -30,6 +32,7 @@ public class DynamicNPCGenerator : EditorWindow
         GUILayout.Label("Generate New NPC", EditorStyles.boldLabel);
 
         npcBaseName = EditorGUILayout.TextField("NPC Name", npcBaseName);
+        npcGuild = EditorGUILayout.TextField("NPC Guild/Group", npcGuild);
         npcRelationship = EditorGUILayout.IntField("NPC Relationship (0-100)", npcRelationship);
         npcID = EditorGUILayout.IntField("NPC ID", npcID);
         npcObject = EditorGUILayout.ObjectField("NPC Object", npcObject, typeof(GameObject), false) as GameObject;
@@ -41,6 +44,7 @@ public class DynamicNPCGenerator : EditorWindow
         }
     }
 
+    //create an NPC given the varaibles inputed in the editor tool display
     private void GenerateNPC()
     {
         if (npcBaseName == string.Empty)
@@ -56,6 +60,13 @@ public class DynamicNPCGenerator : EditorWindow
 
         Vector2 spawnPos = new Vector2(0f, 0f);
         GameObject newNPC = Instantiate(npcObject, spawnPos, Quaternion.identity);
+
+        if(!newNPC.GetComponent<NPC>().addGuild(npcGuild))
+        {
+            Debug.LogError("Error: Please list a guild/group name that this NPC has NOT already been assigned to");
+            return;
+        }
+
         newNPC.GetComponent<NPC>().currentRelationship = (int) npcRelationship;
         newNPC.GetComponent<NPC>().dialogue.name = npcBaseName;
         newNPC.name = npcBaseName + npcID;

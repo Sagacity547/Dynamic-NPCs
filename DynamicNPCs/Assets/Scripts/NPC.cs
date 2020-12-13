@@ -130,7 +130,7 @@ public class NPC : MonoBehaviour
 
     // adds NPC to their connections and them to the NPCs connections 
     // returns true if NPC is not null
-    bool makeConnection(NPC connect)
+    public bool makeConnection(NPC connect)
     {
         if (connect)
         {
@@ -143,7 +143,7 @@ public class NPC : MonoBehaviour
 
     // recieves make connection call from makeConnection()
     // returns true if connection was made 
-    bool recieveConnection(NPC connect) {
+    public bool recieveConnection(NPC connect) {
         if (connect)
         {
             connections.Add(connect);
@@ -153,18 +153,18 @@ public class NPC : MonoBehaviour
     }
 
     // returns list of all the guilds the calling variable has
-    List<string> getGuilds() {
+    public List<string> getGuilds() {
         return guilds;
     }
 
     // returns if the NPC is in the guild requested
-    bool isInGuild(string guild) {
+    public bool isInGuild(string guild) {
         return guilds.Contains(guild);
     }
 
     // adds guild to guild list
     // returns true if guild was added, false if the guild was already in list
-    bool addGuild(string guild) {
+    public bool addGuild(string guild) {
         if (!guilds.Contains(guild)){
             guilds.Add(guild);
             return true;
@@ -174,7 +174,7 @@ public class NPC : MonoBehaviour
 
     // returns all the guild memebers of a specfied guild
     // very greedy, should not be called often
-    List<NPC> getGuildMates(string guild) {
+    public List<NPC> getGuildMates(string guild) {
         return null;
     }
 }
