@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - Dynamic_NPC
+  - collectable
   layers:
   - Default
   - TransparentFX

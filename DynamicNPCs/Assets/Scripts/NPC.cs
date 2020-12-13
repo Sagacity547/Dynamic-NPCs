@@ -10,6 +10,10 @@ public class NPC : MonoBehaviour
     public int currentRelationship;
     public int npc_id;
     private GameObject player;
+    public string questItem;
+    private int questItemCount;
+    public int questItemNeeded;
+    private bool questComplete = false;
 
     public static List<NPC> connections = new List<NPC>();
     public static List<string> guilds = new List<string>();
@@ -18,6 +22,7 @@ public class NPC : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        questItemNeeded = 3;
     }
 
     // Update is called once per frame
@@ -50,6 +55,11 @@ public class NPC : MonoBehaviour
     public List<string> talkQuest()
     {
         return questSentances;
+    }
+
+    void playerHasQuestItems()
+    {
+
     }
 
     //Stranger level relationship 0
@@ -125,6 +135,33 @@ public class NPC : MonoBehaviour
 
             dialogue.sentances.Add("Alrighty then, see you around soon friend!");
             sentancesSet = true;
+        }
+    }
+
+    private void addItem(string itemName)
+    {
+        if(itemName == questItem)
+        {
+            questItemCount++;
+        }
+    }
+
+
+    private bool checkPlayerItems(string itemName)
+    {
+        bool hasItems = false;
+        Player playerScript = player.GetComponent<Player>();
+        hasItems = playerScript.itemAmount(itemName) > 0;
+        return hasItems;
+    }
+
+    private void takeItems(string itemName)
+    {
+        Player playerScript = player.GetComponent<Player>();
+        int itemsTaken = playerScript.removeItems(itemName);
+        for(int i = 0; i < itemsTaken; i++)
+        {
+            addItem(itemName);
         }
     }
 

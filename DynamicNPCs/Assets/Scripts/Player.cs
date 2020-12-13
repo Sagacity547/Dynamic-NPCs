@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     //Implemented code
     private DialogueManager dialogueManager;
     public string name;
+    private int cherrys;
 
     // Use this for initialization
     void Start()
@@ -221,6 +222,27 @@ public class Player : MonoBehaviour
     private bool canInteract;
     private GameObject NPC;
     private bool startedTalking;
+
+    public int itemAmount(string itemName)
+    {
+        if (itemName == "Cherrys")
+        {
+            return cherrys;
+        }
+        else
+            return 0;
+    }
+
+    public int removeItems(string itemName)
+    {
+        int amount = 0;
+        if(itemName == "Cherrys")
+        {
+            amount = cherrys;
+            cherrys = 0;
+        }
+        return amount;
+    }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -228,6 +250,10 @@ public class Player : MonoBehaviour
         {
             canInteract = true;
             NPC = collision.gameObject;
+        } else if (collision.tag == "collectable")
+        {
+            GameObject item = collision.gameObject;
+            cherrys++;
         }
     }
 
