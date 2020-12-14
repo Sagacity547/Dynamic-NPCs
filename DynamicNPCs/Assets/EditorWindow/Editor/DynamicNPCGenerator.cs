@@ -8,7 +8,7 @@ public class DynamicNPCGenerator : EditorWindow
     string npcBaseName = "";
     string npcGuild = "";
     int npcRelationship = 50;
-    int npcID = 1;
+    //int npcID = 1;
     GameObject npcObject;
 
     //Other Variables
@@ -34,7 +34,7 @@ public class DynamicNPCGenerator : EditorWindow
         npcBaseName = EditorGUILayout.TextField("NPC Name", npcBaseName);
         npcGuild = EditorGUILayout.TextField("NPC Guild/Group", npcGuild);
         npcRelationship = EditorGUILayout.IntField("NPC Relationship (0-100)", npcRelationship);
-        npcID = EditorGUILayout.IntField("NPC ID", npcID);
+        //npcID = EditorGUILayout.IntField("NPC ID", npcID);
         npcObject = EditorGUILayout.ObjectField("NPC Object", npcObject, typeof(GameObject), false) as GameObject;
 
         if (GUILayout.Button("Generate NPC"))
@@ -69,9 +69,9 @@ public class DynamicNPCGenerator : EditorWindow
 
         newNPC.GetComponent<NPC>().currentRelationship = (int) npcRelationship;
         newNPC.GetComponent<NPC>().dialogue.name = npcBaseName;
-        newNPC.name = npcBaseName + npcID;
+        //newNPC.name = npcBaseName + npcID;
 
-        npcID++;
+        //npcID++;
     }
 
     // Update is called once per frame
