@@ -221,7 +221,7 @@ public class Player : MonoBehaviour
     //NPC variables
     private bool canInteract;
     private GameObject NPC;
-    private bool startedTalking;
+    public bool startedTalking;
 
     public int itemAmount(string itemName)
     {

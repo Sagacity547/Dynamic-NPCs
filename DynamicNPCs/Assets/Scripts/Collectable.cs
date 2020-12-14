@@ -10,7 +10,7 @@ public class Collectable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -23,6 +23,7 @@ public class Collectable : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
+            player.cherrys += 1;
             Destroy(this.gameObject);
         }
     }

@@ -10,10 +10,13 @@ public class NPC : MonoBehaviour
     public int currentRelationship;
     public int npc_id;
     private GameObject player;
+    private DialogueManager dManager;
     public string questItem;
     private int questItemCount;
-    public int questItemNeeded;
+    public int questItemNeeded = 3;
     private bool questComplete = false;
+    private int raiseAmount = 30;
+    public bool playerHasMet = false;
 
     public List<NPC> connections = new List<NPC>();
     public List<string> guilds = new List<string>();
@@ -22,13 +25,16 @@ public class NPC : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        questItemNeeded = 3;
+        dManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
 
         guilds.Add("Thieves Guild");
         connections = getGuildMatesFromConnections("Thieves Guild");
-        if (connections.Count == 0) {
+        if (connections.Count == 0)
+        {
             Debug.Log("Test 5 Passed : Guild Mates from Connections");
-        } else {
+        }
+        else
+        {
             Debug.Log("Test 5 Failed: Guld Mates from Connections");
         }
 
@@ -46,24 +52,40 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentRelationship <= 50)
+        if (dManager.dialogueEnded)
         {
             sentancesSet = false;
+        }
+        if (playerHasMet && !questComplete)
+        {
+            if (checkPlayerItems(questItem) && player.GetComponent<Player>().startedTalking)
+            {
+                playerHasItems();
+                takeItems(questItem);
+                questComplete = questItemCount >= questItemNeeded;
+                if (questComplete)
+                {
+                    raiseRelationship(raiseAmount);
+                }
+            }
+        }
+        else if (currentRelationship <= 50)
+        {
             talkStranger();
-        } else if (currentRelationship <= 60)
+        }
+        else if (currentRelationship <= 60)
         {
             //use aquantince dialogue
-            sentancesSet = false;
             talkAquantince();
-        } else if (currentRelationship <= 80)
+        }
+        else if (currentRelationship <= 80)
         {
             //use friend dialouge
-            sentancesSet = false;
             talkFriend();
-        } else if (currentRelationship <= 100)
+        }
+        else if (currentRelationship <= 100)
         {
             //use great friend dialogue
-            sentancesSet = false;
             talkGreatFriend();
         }
     }
@@ -75,29 +97,40 @@ public class NPC : MonoBehaviour
         return questSentances;
     }
 
-    void playerHasQuestItems()
+    void playerHasItems()
     {
-
+        if (!sentancesSet)
+        {
+            dialogue.sentances.Clear();
+            dialogue.sentances.Add("Hi there");
+            dialogue.sentances.Add("I see you've brought me some " + questItem + "s for me");
+            dialogue.sentances.Add("Thank you so much!");
+            sentancesSet = true;
+        }
     }
 
     //Stranger level relationship 0
-    private bool sentancesSet = false;
+    public bool sentancesSet = false;
     void talkStranger()
     {
-        if(!sentancesSet)
+        if (!sentancesSet)
         {
             dialogue.sentances.Clear();
             dialogue.sentances.Add("Hello there stranger");
             dialogue.sentances.Add("What business do you happen to have with me?");
 
-            foreach (string sentance in talkQuest())
+            if (!questComplete)
             {
-                dialogue.sentances.Add(sentance);
+                foreach (string sentance in talkQuest())
+                {
+                    dialogue.sentances.Add(sentance);
+                }
             }
 
             dialogue.sentances.Add("Well be seeing you around I suppose");
             sentancesSet = true;
         }
+        playerHasMet = true;
     }
 
     //Aquantince level Relationsip 1-3
@@ -106,12 +139,15 @@ public class NPC : MonoBehaviour
         if (!sentancesSet)
         {
             dialogue.sentances.Clear();
-            dialogue.sentances.Add("Hi there" + player.name);
+            dialogue.sentances.Add("Hi there " + player.name);
             dialogue.sentances.Add("What have you been up to recently?");
 
-            foreach (string sentance in talkQuest())
+            if (!questComplete)
             {
-                dialogue.sentances.Add(sentance);
+                foreach (string sentance in talkQuest())
+                {
+                    dialogue.sentances.Add(sentance);
+                }
             }
 
             dialogue.sentances.Add("Talk to you later then!");
@@ -124,12 +160,15 @@ public class NPC : MonoBehaviour
         if (!sentancesSet)
         {
             dialogue.sentances.Clear();
-            dialogue.sentances.Add("Hey" + player.name + "! How are you doing?");
+            dialogue.sentances.Add("Hey " + player.name + "! How are you doing?");
             dialogue.sentances.Add("Hope you've been doing well on your journeys");
 
-            foreach (string sentance in talkQuest())
+            if (!questComplete)
             {
-                dialogue.sentances.Add(sentance);
+                foreach (string sentance in talkQuest())
+                {
+                    dialogue.sentances.Add(sentance);
+                }
             }
 
             dialogue.sentances.Add("See you around, good luck out there!");
@@ -146,9 +185,12 @@ public class NPC : MonoBehaviour
             dialogue.sentances.Add("You mind hanging out with me for a bit?");
             dialogue.sentances.Add("I've just got a lot I want to talk about with you.");
 
-            foreach (string sentance in talkQuest())
+            if (!questComplete)
             {
-                dialogue.sentances.Add(sentance);
+                foreach (string sentance in talkQuest())
+                {
+                    dialogue.sentances.Add(sentance);
+                }
             }
 
             dialogue.sentances.Add("Alrighty then, see you around soon friend!");
@@ -156,9 +198,14 @@ public class NPC : MonoBehaviour
         }
     }
 
+    private void raiseRelationship(int raiseAmount)
+    {
+        currentRelationship += raiseAmount;
+    }
+
     private void addItem(string itemName)
     {
-        if(itemName == questItem)
+        if (itemName == questItem)
         {
             questItemCount++;
         }
@@ -177,7 +224,7 @@ public class NPC : MonoBehaviour
     {
         Player playerScript = player.GetComponent<Player>();
         int itemsTaken = playerScript.removeItems(itemName);
-        for(int i = 0; i < itemsTaken; i++)
+        for (int i = 0; i < itemsTaken; i++)
         {
             addItem(itemName);
         }
@@ -198,7 +245,8 @@ public class NPC : MonoBehaviour
 
     // recieves make connection call from makeConnection()
     // returns true if connection was made 
-    public bool recieveConnection(NPC connect) {
+    public bool recieveConnection(NPC connect)
+    {
         if (connect)
         {
             connections.Add(connect);
@@ -208,30 +256,44 @@ public class NPC : MonoBehaviour
     }
 
     // returns list of all the guilds the calling variable has
-    public List<string> getGuilds() {
+    public List<string> getGuilds()
+    {
         return guilds;
     }
 
     // returns if the NPC is in the guild requested
-    public bool isInGuild(string guild) {
+    public bool isInGuild(string guild)
+    {
         return guilds.Contains(guild);
     }
 
     // adds guild to guild list
     // returns true if guild was added, false if the guild was already in list
-    public bool addGuild(string guild) {
-        if (!guilds.Contains(guild)){
+    public bool addGuild(string guild)
+    {
+        if (!guilds.Contains(guild))
+        {
             guilds.Add(guild);
             return true;
         }
         return false;
     }
 
+    // returns all the guild memebers of a specfied guild
+    // very greedy, should not be called often
+    public List<NPC> getGuildMates(string guild)
+    {
+        return null;
+    }
+
     // returns all the guild memebers of a specfied guild from NPCs connections
-    public List<NPC> getGuildMatesFromConnections(string guild) {
+    public List<NPC> getGuildMatesFromConnections(string guild)
+    {
         List<NPC> ret = new List<NPC>();
-        foreach (NPC npc in connections) {
-            if (npc.guilds.Contains(guild)) {
+        foreach (NPC npc in connections)
+        {
+            if (npc.guilds.Contains(guild))
+            {
                 ret.Add(npc);
             }
         }
@@ -240,8 +302,8 @@ public class NPC : MonoBehaviour
 
     // returns all NPCs in scene phonebook that are in "guild"
     // returns null if phonebook has not be initalized 
-    // very greedy, should not be called often
-    public List<NPC> getGuildMatesFromPhonebook(string guild) {
+    public List<NPC> getGuildMatesFromPhonebook(string guild)
+    {
         GameObject phonebook = GameObject.FindGameObjectWithTag("phonebook");
         if (!phonebook)
             return null;
