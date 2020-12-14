@@ -15,14 +15,32 @@ public class NPC : MonoBehaviour
     public int questItemNeeded;
     private bool questComplete = false;
 
-    public static List<NPC> connections = new List<NPC>();
-    public static List<string> guilds = new List<string>();
+    public List<NPC> connections = new List<NPC>();
+    public List<string> guilds = new List<string>();
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         questItemNeeded = 3;
+
+        guilds.Add("Thieves Guild");
+        connections = getGuildMatesFromConnections("Thieves Guild");
+        if (connections.Count == 0) {
+            Debug.Log("Test 5 Passed : Guild Mates from Connections");
+        } else {
+            Debug.Log("Test 5 Failed: Guld Mates from Connections");
+        }
+
+        connections = getGuildMatesFromPhonebook("Thieves Guild");
+        if (connections.Count == 2)
+        {
+            Debug.Log("Test 6 Passed : Guild Mates from Connections");
+        }
+        else
+        {
+            Debug.Log("Test 6 Failed: Guld Mates from Connections");
+        }
     }
 
     // Update is called once per frame
@@ -209,9 +227,26 @@ public class NPC : MonoBehaviour
         return false;
     }
 
-    // returns all the guild memebers of a specfied guild
+    // returns all the guild memebers of a specfied guild from NPCs connections
+    public List<NPC> getGuildMatesFromConnections(string guild) {
+        List<NPC> ret = new List<NPC>();
+        foreach (NPC npc in connections) {
+            if (npc.guilds.Contains(guild)) {
+                ret.Add(npc);
+            }
+        }
+        return ret;
+    }
+
+    // returns all NPCs in scene phonebook that are in "guild"
+    // returns null if phonebook has not be initalized 
     // very greedy, should not be called often
-    public List<NPC> getGuildMates(string guild) {
-        return null;
+    public List<NPC> getGuildMatesFromPhonebook(string guild) {
+        GameObject phonebook = GameObject.FindGameObjectWithTag("phonebook");
+        if (!phonebook)
+            return null;
+        List<NPC> ret = new List<NPC>();
+        ret = phonebook.GetComponent<Phonebook>().getGuildMembers(guild);
+        return ret;
     }
 }

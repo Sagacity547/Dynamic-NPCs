@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 8362209}
   m_Layer: 0
   m_Name: Phonebook
-  m_TagString: Untagged
+  m_TagString: phonebook
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21343,6 +21343,10 @@ MonoBehaviour:
     sentances: []
   currentRelationship: 0
   npc_id: 2
+  questItem: 
+  questItemNeeded: 0
+  connections: []
+  guilds: []
   questSentances: []
 --- !u!4 &4532009473763615
 Transform:

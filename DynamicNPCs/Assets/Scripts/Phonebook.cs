@@ -16,8 +16,8 @@ public class Phonebook : MonoBehaviour
         foreach(GameObject NPC in NPCs) {
             NPC.GetComponent<NPC>().npc_id = curr_id;
             phonebook.Add(NPC.GetComponent<NPC>().npc_id, NPC);
+            curr_id++;
         }
-        tester();
     }
 
     // Update is called once per frame
@@ -54,6 +54,20 @@ public class Phonebook : MonoBehaviour
             return true;
         }
         return false; 
+    }
+    
+    // returns a list of NPCs in a certain "guild" 
+    // should be used to recompile list of guild mates / connections for any given NPC
+    public List<NPC> getGuildMembers(string guild) {
+        Dictionary<int, GameObject>.ValueCollection gameObjects = phonebook.Values;
+        List<NPC> ret = new List<NPC>();
+        foreach (GameObject go in gameObjects) {
+            List<string> guilds = go.GetComponent<NPC>().guilds;
+            if (guilds.Contains(guild)) {
+                ret.Add(go.GetComponent<NPC>());
+            }
+        }
+        return ret;
     }
 
     public static void tester() {
