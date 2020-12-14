@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     //Implemented code
     private DialogueManager dialogueManager;
     public string name;
-    private int cherrys;
+    public int cherrys;
 
     // Use this for initialization
     void Start()
@@ -174,9 +174,15 @@ public class Player : MonoBehaviour
                     DialogueTrigger npcTrigger = NPC.GetComponent<DialogueTrigger>();
                     npcTrigger.TriggerDialogue();
                     startedTalking = true;
+                    
                 } else
                 {
                     dialogueManager.DisplayNextSentance();
+                    if(dialogueManager.dialogueEnded)
+                    {
+                        startedTalking = false;
+                        NPC.GetComponent<NPC>().playerHasMet = true;
+                    }
                 }
             }
 
@@ -252,8 +258,6 @@ public class Player : MonoBehaviour
             NPC = collision.gameObject;
         } else if (collision.tag == "collectable")
         {
-            GameObject item = collision.gameObject;
-            cherrys++;
         }
     }
 

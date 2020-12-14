@@ -21185,6 +21185,7 @@ GameObject:
   - component: {fileID: 1937449566}
   - component: {fileID: 1937449565}
   - component: {fileID: 1937449564}
+  - component: {fileID: 1937449567}
   m_Layer: 0
   m_Name: Cherry
   m_TagString: collectable
@@ -21267,12 +21268,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937449563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.231, y: 2.511, z: 0}
+  m_LocalPosition: {x: 5.231, y: -4.6, z: 0}
   m_LocalScale: {x: 3.33827, y: 3.33827, z: 3.33827}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1937449567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937449563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9dc2d952e8fbe24691302e4fdfb3994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+  collectName: Cherry
 --- !u!1 &1287203946870009
 GameObject:
   m_ObjectHideFlags: 0
@@ -21313,7 +21328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1463393519416632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21345,9 +21360,11 @@ MonoBehaviour:
   npc_id: 2
   questItem: 
   questItemNeeded: 0
+  playerHasMet: 0
   connections: []
   guilds: []
   questSentances: []
+  sentancesSet: 0
 --- !u!4 &4532009473763615
 Transform:
   m_ObjectHideFlags: 0
@@ -21858,6 +21875,8 @@ MonoBehaviour:
   m_noBlood: 0
   m_slideDust: {fileID: 0}
   name: Chad Chadington
+  cherrys: 0
+  startedTalking: 0
 --- !u!1 &7053259376832480256
 GameObject:
   m_ObjectHideFlags: 0
@@ -22760,6 +22779,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7759499164261397305, guid: 9e2a1d5f4f3d52e4d96671680f96f4fd, type: 3}
+      propertyPath: questItem
+      value: Cherrys
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759499164261397305, guid: 9e2a1d5f4f3d52e4d96671680f96f4fd, type: 3}
+      propertyPath: questSentances.Array.data[0]
+      value: I've been looking for some cherries recently
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759499164261397305, guid: 9e2a1d5f4f3d52e4d96671680f96f4fd, type: 3}
+      propertyPath: questSentances.Array.data[1]
+      value: But I can't seem to find any around
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759499164261397305, guid: 9e2a1d5f4f3d52e4d96671680f96f4fd, type: 3}
+      propertyPath: questSentances.Array.data[2]
+      value: I'd appreciate it if you brought some to me
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759499164261397305, guid: 9e2a1d5f4f3d52e4d96671680f96f4fd, type: 3}
+      propertyPath: questItemNeeded
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7759499164261397307, guid: 9e2a1d5f4f3d52e4d96671680f96f4fd, type: 3}
       propertyPath: m_Name
       value: NPC 1

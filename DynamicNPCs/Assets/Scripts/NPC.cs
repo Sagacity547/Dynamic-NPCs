@@ -53,9 +53,10 @@ public class NPC : MonoBehaviour
     void Update()
     {
         if (dManager.dialogueEnded)
-        {
+        { 
             sentancesSet = false;
         }
+
         if (playerHasMet && !questComplete)
         {
             if (checkPlayerItems(questItem) && player.GetComponent<Player>().startedTalking)
@@ -69,21 +70,21 @@ public class NPC : MonoBehaviour
                 }
             }
         }
-        else if (currentRelationship <= 50)
+        else if (currentRelationship <= 50 && player.GetComponent<Player>().startedTalking)
         {
             talkStranger();
         }
-        else if (currentRelationship <= 60)
+        else if (currentRelationship <= 60 && player.GetComponent<Player>().startedTalking)
         {
             //use aquantince dialogue
             talkAquantince();
         }
-        else if (currentRelationship <= 80)
+        else if (currentRelationship <= 80 && player.GetComponent<Player>().startedTalking)
         {
             //use friend dialouge
             talkFriend();
         }
-        else if (currentRelationship <= 100)
+        else if (currentRelationship <= 100 && player.GetComponent<Player>().startedTalking)
         {
             //use great friend dialogue
             talkGreatFriend();
@@ -103,7 +104,7 @@ public class NPC : MonoBehaviour
         {
             dialogue.sentances.Clear();
             dialogue.sentances.Add("Hi there");
-            dialogue.sentances.Add("I see you've brought me some " + questItem + "s for me");
+            dialogue.sentances.Add("I see you've brought me some " + questItem + " for me");
             dialogue.sentances.Add("Thank you so much!");
             sentancesSet = true;
         }
@@ -130,7 +131,7 @@ public class NPC : MonoBehaviour
             dialogue.sentances.Add("Well be seeing you around I suppose");
             sentancesSet = true;
         }
-        playerHasMet = true;
+        //playerHasMet = true;
     }
 
     //Aquantince level Relationsip 1-3
